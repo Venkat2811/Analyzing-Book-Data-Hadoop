@@ -1,2 +1,2 @@
 # Analyzing-Book-Crossing-Data-Hadoop
-I did this project as part of Edureka Big Data &amp; Hadoop Certification.
+This project was done as part of Edureka's Big Data &amp; Hadoop Certification.

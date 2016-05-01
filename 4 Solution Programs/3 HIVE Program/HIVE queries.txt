@@ -1,0 +1,53 @@
+1)CREATING DATABASE
+========================================
+create database projectdb;
+set hive.cli.print.current.db = true;
+
+2)CREATING RATINGS TABLE
+========================================
+create table ratingstable (isbn string,ratings int)
+row format delimited
+fields terminated by '\t';
+
+3)LOADING DATA
+========================================
+load data local inpath '/home/edureka/Desktop/isbnAndRatings/part-r-00000' into table ratingstable;
+
+4)CREATING YEAR TABLE
+========================================
+create table yeartable (isbn string,year int)
+row format delimited
+fields terminated by '\t';
+
+5)LOADING DATA
+============================================
+load data local inpath '/home/edureka/Desktop/isbnAndYear/part-r-00000'
+into table yeartable;
+
+6)PERFOMING JOIN AND STORING RESULTS IN JOINRESULTS TABLE
+=================================================================
+create table joinresults (isbn string,ratings int,year int)
+row format delimited
+fields terminated by '\t'
+insert overwrite table joinresults
+select r.isbn,r.ratings,y.isbn,y.year
+from ratingstable r join yeartable y
+on r.isbn = y.isbn;
+
+7)FINAL RESULT
+=================================================================
+create table finalresult (year int,ratings int)
+row format delimited
+fields terminated by '\t'
+insert overwrite table finalresult
+select ratings, count(ratings) from joinresults group by ratings;
+
+====================================END=====================================
+
+ 
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+bookFreqFile = load '/user/project/Outputs/bookFreq/part-r-00000' as (year:int,count:int);
+grp = group bookFreqFile all; 	
+countMax = foreach grp generate MAX(bookFreqFile.count) as max;
+res = filter bookFreqFile by count == countMax.max;
+store res into '/user/project/Outputs/pig/maxBooks';
+
